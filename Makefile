@@ -1,45 +1,27 @@
-# PROGRAMA
-    PROGS = ajustePol gera_entrada
-    OBJS = utils.o linear.o
+# Adicionado -g para incluir símbolos de depuração, essencial para o Valgrind
+parametrosCompilacao=-Wall -g -lm
+nomePrograma=broyden
 
-	#LIKWID = /home/soft/likwid
- 	#LIKWID_FLAGS = -I$(LIKWID)/include
-  	#LIKWID_LIBS = -L$(LIKWID)/lib
+# Flags recomendadas para uma análise completa de memória
+FLAGS_VALGRIND=--leak-check=full --show-leak-kinds=all --track-origins=yes
 
-    AVX_FLAGS = -mavx2 -march=native -fopt-info-vec
+all: $(nomePrograma)
 
-# Compilador
-	CC = gcc -O3 $(AVX_FLAGS) -Wno-unused-result 
-    CC = gcc -Wno-unused-result
-    #CFLAGS = -DLIKWID_PERFMON $(LIKWID_FLAGS) 
-    #LFLAGS = $(LIKWID_LIBS) -llikwid -lm
-    LFLAGS = -lm
+$(nomePrograma): main.o broyden.o utils.o
+	gcc -o $(nomePrograma) main.o broyden.o utils.o $(parametrosCompilacao)
 
-# Lista de arquivos para distribuição.
-# LEMBRE-SE DE ACRESCENTAR OS ARQUIVOS ADICIONAIS SOLICITADOS NO ENUNCIADO DO TRABALHO
-DISTFILES = *.c *.h LEIAME* Makefile 
-DISTDIR = login-dinf
+main.o: main.c
+	gcc -c main.c $(parametrosCompilacao)
 
-.PHONY: all clean purge dist
+broyden.o: broyden.h broyden.c
+	gcc -c broyden.c $(parametrosCompilacao)
 
-%o: %c utils.h linear.h
-	$(CC) -o $@ $(CFLAGS) $^
+utils.o: utils.h utils.c
+	gcc -c utils.c $(parametrosCompilacao)
 
-all: $(PROGS)
-
-$(PROGS) : % : %.o $(OBJS)
-	$(CC) -o $@ $(CFLAGS) $^ $(LFLAGS)
+# Nova regra: compila (se necessário) e executa com valgrind
+valgrind: $(nomePrograma)
+	valgrind $(FLAGS_VALGRIND) ./$(nomePrograma)
 
 clean:
-	@echo "Limpando sujeira ..."
-	@rm -f *~ *.bak core 
-
-purge:  clean
-	@echo "Limpando tudo ..."
-	@rm -f $(PROGS) *.o a.out $(DISTDIR) $(DISTDIR).tar
-
-dist: purge
-	@echo "Gerando arquivo de distribuição ($(DISTDIR).tgz) ..."
-	@ln -s . $(DISTDIR)
-	@tar -chvzf $(DISTDIR).tgz $(addprefix ./$(DISTDIR)/, $(DISTFILES))
-	@rm -f $(DISTDIR)
+	rm -f *.o *.gch $(nomePrograma)
