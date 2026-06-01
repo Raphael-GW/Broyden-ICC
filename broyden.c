@@ -17,6 +17,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "utils.h"
+
 /* --------- F(x): calcula o vetor F no ponto x --------- */
 void avaliaF(const double *x, double *f, int n) {
     f[0] = -2.0*x[0]*x[0] + 3.0*x[0] - 2.0*x[1] + 1.0;
@@ -65,9 +67,9 @@ double norma(const double *v, int n) {
     return sqrt(s);
 }
 
-void newton(double *a, double *b, double *c, double *f, double *s, double *x, double tol, int max_iter, int n) {
+void newton(double *a, double *b, double *c, double *f, double *s, double *x, double tol, int max_iter, int n, rtime_t tempoJ) {
     double *menos_f = (double *) malloc(n * sizeof(double)); // -F(X)
-    
+    rtime_t tempo;
     for (int k = 0; k < max_iter; k++) {
         
         double nF = norma(f, n);
@@ -99,7 +101,10 @@ void newton(double *a, double *b, double *c, double *f, double *s, double *x, do
         }
 
         avaliaF(x, f, n); //monta o vetor F(X)
+
+        tempo = timestamp ();
         montaJacobiana(x, a, b, c, n);
+        tempoJ += timestamp() - tempo;
     }
     free(menos_f);
 }
