@@ -8,7 +8,7 @@
 int main() {
     int n, max_iter; // define  o tamanho do sistema e o número máximo de iterações
     double x0, tol; // define o chute inicial e a tolerância para convergência
-    rtime_t tempo, tempo_montaJ, tempo_newton, tempo_total;
+    rtime_t tempo, tempo_montaJ, tempo_newton, tempo_resolucao = 0.0;
 
     
     printf ("Digite a dimensao do sistema (N): ");
@@ -19,8 +19,6 @@ int main() {
     scanf ("%lf", &tol);
     printf ("Digite o numero maximo de iteracoes: ");
     scanf ("%d", &max_iter);
-    
-    tempo_total = timestamp ();
 
     double *x =  malloc(n * sizeof(double)); // vetor com as variáveis x
     double *f =  malloc(n * sizeof(double)); // vetor com cada resultado de f(x)
@@ -39,14 +37,14 @@ int main() {
     tempo_montaJ = timestamp() - tempo;
 
     tempo = timestamp ();
-    newton(a, b, c, f, s, x, tol, max_iter, n, tempo_montaJ);
+    newton(a, b, c, f, s, x, tol, max_iter, n, tempo_montaJ, tempo_resolucao);
     tempo_newton = timestamp() - tempo;
 
-    tempo_total = timestamp() - tempo_total;
+    
     printf ("##########\n");
-    printf ("# Tempo Total: %f\n", tempo_total);
+    printf ("# Tempo Total: %f\n", tempo_newton);
     printf ("# Tempo Jacobiana: %f\n", tempo_montaJ);
-    printf ("# Tampo SL: %f\n", tempo_newton);
+    printf ("# Tampo SL: %f\n", tempo_resolucao);
     printf ("##########\n");
 
     free(x); 

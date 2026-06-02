@@ -67,7 +67,7 @@ double norma(const double *v, int n) {
     return sqrt(s);
 }
 
-void newton(double *a, double *b, double *c, double *f, double *s, double *x, double tol, int max_iter, int n, rtime_t tempoJ) {
+void newton(double *a, double *b, double *c, double *f, double *s, double *x, double tol, int max_iter, int n, rtime_t tempoJ, rtime_t tempo_resolucao) {
     double *menos_f = (double *) malloc(n * sizeof(double)); // -F(X)
     rtime_t tempo;
     for (int k = 0; k < max_iter; k++) {
@@ -83,7 +83,9 @@ void newton(double *a, double *b, double *c, double *f, double *s, double *x, do
 
         for (int i = 0; i < n; i++) menos_f[i] = -f[i];
 
+        tempo = timestamp ();
         eliminacaoGauss(a, b, c, s, menos_f, n); // resolve J(X) * s = -F(X)
+        tempo_resolucao += timestamp () - tempo;
 
         for (int i = 0; i < n; i++) x[i] += s[i]; // atualiza X(i+1)
 

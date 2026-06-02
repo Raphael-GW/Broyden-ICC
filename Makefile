@@ -1,5 +1,5 @@
 # Adicionado -g para incluir símbolos de depuração, essencial para o Valgrind
-parametrosCompilacao=-Wall -g -lm
+parametrosCompilacao=-O3 -march=native -mavx -fopt-info-vec -lm;
 nomePrograma=broyden
 
 # Flags recomendadas para uma análise completa de memória
