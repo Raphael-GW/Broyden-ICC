@@ -34,16 +34,36 @@ void avaliaF(const double *x, double *f, int n) {
  * a: subdiagonal  (indices 1..n-1 usados; a[0] ignorado)
  * b: diagonal     (indices 0..n-1)
  * c: superdiag.   (indices 0..n-2 usados; c[n-1] ignorado)
- */
-void montaJacobiana(const double *x, double *a, double *b, double *c, int n) {
+ 
+void montaJacobiana(double *x, double *a, double *b, double *c, int n) {
     for (int i = 0; i < n; i++) {
-        b[i] = -4.0 * x[i] + 3.0;     /* diagonal principal varia com x */
+        b[i] = -4.0 * x[i] + 3.0;     // diagonal principal varia com x 
     }
     for (int i = 0; i < n-1; i++) a[i] = -1.0;
     for (int i = 0; i < n-1; i++) c[i] = -2.0;
 }
+*/
+
+void montaJacobiana(double *x, double **j, int n){
+    for (int i = 0; i < n; ++i){
+        for (int k = i; k < n; ++k){
+            j[i][k] = 0.0; // preenche a matriz com zeros
+        }
+    }
+    
+    j[0][0] = -4.0*x[0] + 3.0;
+    j[0][1] = -2.0;
+    for (int i = 1; i < n-1; ++i){ // monta as 3 diagonais
+        j[i][i-1] = -1.0;
+        j[i][i] = -4.0*x[i] + 3.0;
+        j[i][i+1] = -2.0;
+    }
+    j[n-1][n-2] = -1.0;
+    j[n-1][n-1] = -4.0*x[0] + 3.0;
+}
 
 
+/* Eliminação de Gauss otimizada
 void eliminacaoGauss (double *a, double *b, double *c, double *s, double *f, int n){
     // triangularizacao
     for (int i = 0; i < n-1; ++i){
@@ -59,6 +79,11 @@ void eliminacaoGauss (double *a, double *b, double *c, double *s, double *f, int
         s[i] = (f[i] - c[i]*s[i+1]) / b[i];
     }
 }
+*/
+
+void eliminacaoGauss (double **j, double *s, double *f, int n){
+    
+}
 
 /* --------- norma euclidiana --------- */
 double norma(const double *v, int n) {
@@ -67,7 +92,7 @@ double norma(const double *v, int n) {
     return sqrt(s);
 }
 
-void newton(double *a, double *b, double *c, double *f, double *s, double *x, double tol, int max_iter, int n, rtime_t tempoJ, rtime_t tempo_resolucao) {
+void newton(double **j, double *f, double *s, double *x, double tol, int max_iter, int n, rtime_t tempoJ, rtime_t tempo_resolucao) {
     double *menos_f = (double *) malloc(n * sizeof(double)); // -F(X)
     rtime_t tempo;
     for (int k = 0; k < max_iter; k++) {
@@ -84,7 +109,7 @@ void newton(double *a, double *b, double *c, double *f, double *s, double *x, do
         for (int i = 0; i < n; i++) menos_f[i] = -f[i];
 
         tempo = timestamp ();
-        eliminacaoGauss(a, b, c, s, menos_f, n); // resolve J(X) * s = -F(X)
+        eliminacaoGauss(j, s, menos_f, n); // resolve J(X) * s = -F(X)
         tempo_resolucao += timestamp () - tempo;
 
         for (int i = 0; i < n; i++) x[i] += s[i]; // atualiza X(i+1)

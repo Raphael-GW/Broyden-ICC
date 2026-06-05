@@ -23,9 +23,17 @@ int main() {
     double *x =  malloc(n * sizeof(double)); // vetor com as variáveis x
     double *f =  malloc(n * sizeof(double)); // vetor com cada resultado de f(x)
     double *s =  malloc(n * sizeof(double)); // delta usado para atualizar x (i+1)
+    double **j =  malloc(n * sizeof(double*)); // matriz jacobiana
+
+    for (int i = 0; i < n; i++){
+        j[i] = malloc(n * sizeof(double));
+    }
+    
+    /*Jacobiana otimizada
     double *a =  malloc(n * sizeof(double)); // subdiagonal
     double *b =  malloc(n * sizeof(double)); // diagonal principal
     double *c =  malloc(n * sizeof(double)); // superdiagonal
+    */
 
     /* chute inicial para todos */
     for (int i = 0; i < n; i++) x[i] = x0;
@@ -33,11 +41,11 @@ int main() {
     avaliaF(x, f, n); //monta o vetor F(X)
 
     tempo = timestamp();
-    montaJacobiana(x, a, b, c, n);
+    montaJacobiana(x, j, n);
     tempo_montaJ = timestamp() - tempo;
 
     tempo = timestamp ();
-    newton(a, b, c, f, s, x, tol, max_iter, n, tempo_montaJ, tempo_resolucao);
+    newton(j, f, s, x, tol, max_iter, n, tempo_montaJ, tempo_resolucao);
     tempo_newton = timestamp() - tempo;
 
     
@@ -50,8 +58,9 @@ int main() {
     free(x); 
     free(f); 
     free(s);
-    free(a); 
-    free(b); 
-    free(c);
+    for (int i = 0; i < n; ++i){
+        free(j[i]);
+    }
+    free(j);
     return 0;
 }
