@@ -59,7 +59,7 @@ void montaJacobiana(double *x, double **j, int n){
         j[i][i+1] = -2.0;
     }
     j[n-1][n-2] = -1.0;
-    j[n-1][n-1] = -4.0*x[0] + 3.0;
+    j[n-1][n-1] = -4.0*x[n-1] + 3.0;
 }
 
 
@@ -82,11 +82,28 @@ void eliminacaoGauss (double *a, double *b, double *c, double *s, double *f, int
 */
 
 void eliminacaoGauss (double **j, double *s, double *f, int n){
-    
+    for (int i = 0; i < n; ++i){
+        for (int k = i+1; k < n; ++k){
+            double m = j[k][i] / j[i][i];
+            j[k][i] = 0;
+            for (int j = i+1; j < n; ++j)
+                j[k][j] -= j[i][j]*m;
+            f[k] -= f[i]*m;
+        }
+    }
+
+    //retro-substituicao
+    s[n-1] = f[n-1] / j[n-1][n-1];
+    for (int i = n-2; i >= 0; --i){
+        s[i] = f[i];
+        for (int j = i+1; j < n; ++j)
+            s[i] -= j[i][j]*s[j];
+        s[i] /= j[i][i];
+    }
 }
 
 /* --------- norma euclidiana --------- */
-double norma(const double *v, int n) {
+double norma(double *v, int n) {
     double s = 0.0;
     for (int i = 0; i < n; i++) s += v[i] * v[i];
     return sqrt(s);
