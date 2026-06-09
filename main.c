@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <likwid.h>
 
 #include "broyden.h"
 #include "utils.h"
 
 int main() {
+    LIKWID_MARKER_INIT; // Inicializa o sistema de marcação do LIKWID
     int n, max_iter; // define  o tamanho do sistema e o número máximo de iterações
     double x0, tol; // define o chute inicial e a tolerância para convergência
     rtime_t tempo, tempo_montaJ, tempo_newton, tempo_resolucao = 0.0;
@@ -41,18 +43,22 @@ int main() {
     avaliaF(x, f, n); //monta o vetor F(X)
 
     tempo = timestamp();
+    LIKWID_MARKER_START("Monta_Jacobiana");
     montaJacobiana(x, j, n);
+    LIKWID_MARKER_STOP("Monta_Jacobiana");
     tempo_montaJ = timestamp() - tempo;
 
     tempo = timestamp ();
-    newton(j, f, s, x, tol, max_iter, n, tempo_montaJ, tempo_resolucao);
+    LIKWID_MARKER_START("Newton");
+    newton(j, f, s, x, tol, max_iter, n, &tempo_montaJ, &tempo_resolucao);
+    LIKWID_MARKER_STOP("Newton");
     tempo_newton = timestamp() - tempo;
 
     
     printf ("##########\n");
     printf ("# Tempo Total: %f\n", tempo_newton);
     printf ("# Tempo Jacobiana: %f\n", tempo_montaJ);
-    printf ("# Tampo SL: %f\n", tempo_resolucao);
+    printf ("# Tempo SL: %f\n", tempo_resolucao);
     printf ("##########\n");
 
     free(x); 
@@ -62,5 +68,6 @@ int main() {
         free(j[i]);
     }
     free(j);
+    LIKWID_MARKER_CLOSE; // Finaliza o sistema de marcação do LIKWID
     return 0;
 }

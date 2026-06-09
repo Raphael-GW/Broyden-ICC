@@ -86,8 +86,8 @@ void eliminacaoGauss (double **j, double *s, double *f, int n){
         for (int k = i+1; k < n; ++k){
             double m = j[k][i] / j[i][i];
             j[k][i] = 0;
-            for (int j = i+1; j < n; ++j)
-                j[k][j] -= j[i][j]*m;
+            for (int l = i+1; l < n; ++l)
+                j[k][l] -= j[i][l]*m;
             f[k] -= f[i]*m;
         }
     }
@@ -96,8 +96,8 @@ void eliminacaoGauss (double **j, double *s, double *f, int n){
     s[n-1] = f[n-1] / j[n-1][n-1];
     for (int i = n-2; i >= 0; --i){
         s[i] = f[i];
-        for (int j = i+1; j < n; ++j)
-            s[i] -= j[i][j]*s[j];
+        for (int l = i+1; l < n; ++l)
+            s[i] -= j[i][l]*s[l];
         s[i] /= j[i][i];
     }
 }
@@ -147,7 +147,7 @@ void newton(double **j, double *f, double *s, double *x, double tol, int max_ite
         avaliaF(x, f, n); //monta o vetor F(X)
 
         tempo = timestamp ();
-        montaJacobiana(x, a, b, c, n);
+        montaJacobiana(x, j, n);
         tempoJ += timestamp() - tempo;
     }
     free(menos_f);
