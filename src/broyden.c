@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <likwid.h>
 
 #include "utils.h"
 
@@ -109,7 +110,7 @@ double norma(double *v, int n) {
     return sqrt(s);
 }
 
-void newton(double **j, double *f, double *s, double *x, double tol, int max_iter, int n, rtime_t tempoJ, rtime_t tempo_resolucao) {
+void newton(double **j, double *f, double *s, double *x, double tol, int max_iter, int n, rtime_t *tempoJ, rtime_t *tempo_resolucao) {
     double *menos_f = (double *) malloc(n * sizeof(double)); // -F(X)
     rtime_t tempo;
     for (int k = 0; k < max_iter; k++) {
@@ -126,8 +127,12 @@ void newton(double **j, double *f, double *s, double *x, double tol, int max_ite
         for (int i = 0; i < n; i++) menos_f[i] = -f[i];
 
         tempo = timestamp ();
+	
+	LIKWID_MARKER_START("Resolucao_SL");
         eliminacaoGauss(j, s, menos_f, n); // resolve J(X) * s = -F(X)
-        tempo_resolucao += timestamp () - tempo;
+        LIKWID_MARKER_STOP("Resolucao_SL");
+	
+	*tempo_resolucao += timestamp () - tempo;
 
         for (int i = 0; i < n; i++) x[i] += s[i]; // atualiza X(i+1)
 
@@ -147,8 +152,12 @@ void newton(double **j, double *f, double *s, double *x, double tol, int max_ite
         avaliaF(x, f, n); //monta o vetor F(X)
 
         tempo = timestamp ();
-        montaJacobiana(x, j, n);
-        tempoJ += timestamp() - tempo;
+        
+	LIKWID_MARKER_START("Monta_Jacobiana");
+	montaJacobiana(x, j, n);
+	LIKWID_MARKER_STOP("Monta_Jacobiana");
+        
+	*tempoJ += timestamp() - tempo;
     }
     free(menos_f);
 }
