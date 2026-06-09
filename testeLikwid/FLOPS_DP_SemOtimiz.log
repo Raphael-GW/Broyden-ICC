@@ -8,28 +8,28 @@ Region Teste_LIKWID, Group 1: FLOPS_DP
 +-------------------+------------+
 |    Region Info    | HWThread 3 |
 +-------------------+------------+
-| RDTSC Runtime [s] |   0.000027 |
+| RDTSC Runtime [s] |   0.000025 |
 |     call count    |          1 |
 +-------------------+------------+
 
 +---------------------------+---------+------------+
 |           Event           | Counter | HWThread 3 |
 +---------------------------+---------+------------+
-|      ACTUAL_CPU_CLOCK     |  FIXC1  |          0 |
-|       MAX_CPU_CLOCK       |  FIXC2  |          0 |
-|    RETIRED_INSTRUCTIONS   |   PMC0  |          0 |
-|    CPU_CLOCKS_UNHALTED    |   PMC1  |      -     |
-| RETIRED_SSE_AVX_FLOPS_ALL |   PMC2  |      -     |
-|           MERGE           |   PMC3  |      -     |
+|      ACTUAL_CPU_CLOCK     |  FIXC1  |     517042 |
+|       MAX_CPU_CLOCK       |  FIXC2  |     438876 |
+|    RETIRED_INSTRUCTIONS   |   PMC0  |     134974 |
+|    CPU_CLOCKS_UNHALTED    |   PMC1  |      83248 |
+| RETIRED_SSE_AVX_FLOPS_ALL |   PMC2  |      10010 |
+|           MERGE           |   PMC3  |          0 |
 +---------------------------+---------+------------+
 
 +----------------------+--------------+
 |        Metric        |  HWThread 3  |
 +----------------------+--------------+
-|  Runtime (RDTSC) [s] | 2.745137e-05 |
-| Runtime unhalted [s] |            0 |
-|      Clock [MHz]     |            0 |
-|          CPI         |            0 |
-|     DP [MFLOP/s]     |            0 |
+|  Runtime (RDTSC) [s] | 2.534740e-05 |
+| Runtime unhalted [s] |       0.0001 |
+|      Clock [MHz]     |    4233.2496 |
+|          CPI         |       0.6168 |
+|     DP [MFLOP/s]     |     394.9123 |
 +----------------------+--------------+
 
