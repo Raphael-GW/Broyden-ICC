@@ -15,21 +15,21 @@ Region Teste_LIKWID, Group 1: FLOPS_DP
 +---------------------------+---------+------------+
 |           Event           | Counter | HWThread 3 |
 +---------------------------+---------+------------+
-|      ACTUAL_CPU_CLOCK     |  FIXC1  |          0 |
-|       MAX_CPU_CLOCK       |  FIXC2  |          0 |
-|    RETIRED_INSTRUCTIONS   |   PMC0  |          0 |
-|    CPU_CLOCKS_UNHALTED    |   PMC1  |      -     |
-| RETIRED_SSE_AVX_FLOPS_ALL |   PMC2  |      -     |
-|           MERGE           |   PMC3  |      -     |
+|      ACTUAL_CPU_CLOCK     |  FIXC1  |     425736 |
+|       MAX_CPU_CLOCK       |  FIXC2  |     419076 |
+|    RETIRED_INSTRUCTIONS   |   PMC0  |       4949 |
+|    CPU_CLOCKS_UNHALTED    |   PMC1  |      22043 |
+| RETIRED_SSE_AVX_FLOPS_ALL |   PMC2  |         10 |
+|           MERGE           |   PMC3  |          0 |
 +---------------------------+---------+------------+
 
 +----------------------+--------------+
 |        Metric        |  HWThread 3  |
 +----------------------+--------------+
-|  Runtime (RDTSC) [s] | 3.706936e-07 |
-| Runtime unhalted [s] |            0 |
-|      Clock [MHz]     |            0 |
-|          CPI         |            0 |
-|     DP [MFLOP/s]     |            0 |
+|  Runtime (RDTSC) [s] | 1.502810e-07 |
+| Runtime unhalted [s] |       0.0001 |
+|      Clock [MHz]     |    3650.3739 |
+|          CPI         |       4.4540 |
+|     DP [MFLOP/s]     |      66.5420 |
 +----------------------+--------------+
 
