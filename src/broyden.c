@@ -47,7 +47,7 @@ void montaJacobiana(double *x, double *a, double *b, double *c, int n) {
 
 void montaJacobiana(double *x, double **j, int n){
     for (int i = 0; i < n; ++i){
-        for (int k = i; k < n; ++k){
+        for (int k = 0; k < n; ++k){
             j[i][k] = 0.0; // preenche a matriz com zeros
         }
     }
@@ -103,6 +103,7 @@ void eliminacaoGauss (double **j, double *s, double *f, int n){
     }
 }
 
+
 /* --------- norma euclidiana --------- */
 double norma(double *v, int n) {
     double s = 0.0;
@@ -111,53 +112,62 @@ double norma(double *v, int n) {
 }
 
 void newton(double **j, double *f, double *s, double *x, double tol, int max_iter, int n, rtime_t *tempoJ, rtime_t *tempo_resolucao) {
-    double *menos_f = (double *) malloc(n * sizeof(double)); // -F(X)
-    rtime_t tempo;
-    for (int k = 0; k < max_iter; k++) {
+  double *menos_f = (double *) malloc(n * sizeof(double)); // -F(X)
+  rtime_t tempo;
+
+  LIKWID_MARKER_START("Monta_Jacobiana");
+  tempo = timestamp();
+  montaJacobiana(x, j, n);
+  *tempoJ += timestamp() - tempo;
+  LIKWID_MARKER_STOP("Monta_Jacobiana");
+
+
+  for (int k = 0; k < max_iter; k++) {
         
-        double nF = norma(f, n);
+    double nF = norma(f, n);
 
-        if (nF < tol) {
-            printf("%2d | %.6e |  (convergiu)\n", k, nF);
-            printf("\nConvergencia em %d iteracoes.\n", k);
-            break;
-        }
-        
-
-        for (int i = 0; i < n; i++) menos_f[i] = -f[i];
-
-        tempo = timestamp ();
-	
-	LIKWID_MARKER_START("Resolucao_SL");
-        eliminacaoGauss(j, s, menos_f, n); // resolve J(X) * s = -F(X)
-        LIKWID_MARKER_STOP("Resolucao_SL");
-	
-	*tempo_resolucao += timestamp () - tempo;
-
-        for (int i = 0; i < n; i++) x[i] += s[i]; // atualiza X(i+1)
-
-        for (int i = 0; i < n; i++) {
-            printf ("x%d = %.6f \n", i+1, x[i]);
-        }
-        printf("#\n");
-
-        nF = norma(s, n);
-
-        if (nF < tol) {
-            printf("%2d | %.6e |  (convergiu)\n", k, nF);
-            printf("\nConvergencia em %d iteracoes.\n", k);
-            break;
-        }
-
-        avaliaF(x, f, n); //monta o vetor F(X)
-
-        tempo = timestamp ();
-        
-	LIKWID_MARKER_START("Monta_Jacobiana");
-	montaJacobiana(x, j, n);
-	LIKWID_MARKER_STOP("Monta_Jacobiana");
-        
-	*tempoJ += timestamp() - tempo;
+    if (nF < tol) {
+      printf("%2d | %.6e |  (convergiu)\n", k, nF);
+      printf("\nConvergencia em %d iteracoes.\n", k);
+      break;
     }
-    free(menos_f);
+        
+
+    for (int i = 0; i < n; i++) menos_f[i] = -f[i];
+
+	
+    LIKWID_MARKER_START("Resolucao_SL");
+    tempo = timestamp ();
+    eliminacaoGauss(j, s, menos_f, n); // resolve J(X) * s = -F(X)
+	  *tempo_resolucao += timestamp () - tempo;
+    LIKWID_MARKER_STOP("Resolucao_SL");
+	
+
+    for (int i = 0; i < n; i++) x[i] += s[i]; // atualiza X(i+1)
+
+    for (int i = 0; i < n; i++) {
+      printf ("x%d = %.6f \n", i+1, x[i]);
+    }
+    printf("#\n");
+
+    nF = norma(s, n);
+
+    if (nF < tol) {
+      printf("%2d | %.6e |  (convergiu)\n", k, nF);
+      printf("\nConvergencia em %d iteracoes.\n", k);
+      break;
+    }
+
+    avaliaF(x, f, n); //monta o vetor F(X)
+
+    tempo = timestamp ();
+        
+    LIKWID_MARKER_START("Monta_Jacobiana");
+    montaJacobiana(x, j, n);
+    LIKWID_MARKER_STOP("Monta_Jacobiana");
+        
+	  *tempoJ += timestamp() - tempo;
+  }
+
+  free(menos_f);
 }

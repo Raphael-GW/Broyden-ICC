@@ -7,12 +7,9 @@
 #include "utils.h"
 
 int main() {
-    LIKWID_MARKER_INIT; // Inicializa o sistema de marcação do LIKWID
     int n, max_iter; // define  o tamanho do sistema e o número máximo de iterações
     double x0, tol; // define o chute inicial e a tolerância para convergência
-    rtime_t tempo, tempo_montaJ, tempo_newton, tempo_resolucao = 0.0;
 
-    
     printf ("Digite a dimensao do sistema (N): ");
     scanf ("%d", &n);
     printf ("Digite o chute inicial (x0): ");
@@ -42,17 +39,15 @@ int main() {
     
     avaliaF(x, f, n); //monta o vetor F(X)
 
-    tempo = timestamp();
-    LIKWID_MARKER_START("Monta_Jacobiana");
-    montaJacobiana(x, j, n);
-    LIKWID_MARKER_STOP("Monta_Jacobiana");
-    tempo_montaJ = timestamp() - tempo;
+    LIKWID_MARKER_INIT; // Inicializa o sistema de marcação do LIKWID
 
-    tempo = timestamp ();
+    rtime_t tempo_montaJ = 0.0, tempo_resolucao = 0.0;
+
     LIKWID_MARKER_START("Newton");
+    rtime_t tempo_newton = timestamp();
     newton(j, f, s, x, tol, max_iter, n, &tempo_montaJ, &tempo_resolucao);
+    tempo_newton = timestamp() - tempo_newton;
     LIKWID_MARKER_STOP("Newton");
-    tempo_newton = timestamp() - tempo;
 
     
     printf ("##########\n");
