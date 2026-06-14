@@ -16,12 +16,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <likwid.h>
+//#include <likwid.h>
 
 #include "utils.h"
 
 /* --------- F(x): calcula o vetor F no ponto x --------- */
-void avaliaF(const double *x, double *f, int n) {
+void avaliaF(const long double *x, long double *f, int n) {
     f[0] = -2.0*x[0]*x[0] + 3.0*x[0] - 2.0*x[1] + 1.0;
 
     for (int i = 1; i < n - 1; i++) {
@@ -36,7 +36,7 @@ void avaliaF(const double *x, double *f, int n) {
  * b: diagonal     (indices 0..n-1)
  * c: superdiag.   (indices 0..n-2 usados; c[n-1] ignorado)
  
-void montaJacobiana(double *x, double *a, double *b, double *c, int n) {
+void montaJacobiana(long double *x, long double *a, long double *b, long double *c, int n) {
     for (int i = 0; i < n; i++) {
         b[i] = -4.0 * x[i] + 3.0;     // diagonal principal varia com x 
     }
@@ -45,7 +45,7 @@ void montaJacobiana(double *x, double *a, double *b, double *c, int n) {
 }
 */
 
-void montaJacobiana(double *x, double **j, int n){
+void montaJacobiana(long double *x, long double **j, int n){
     for (int i = 0; i < n; ++i){
         for (int k = 0; k < n; ++k){
             j[i][k] = 0.0; // preenche a matriz com zeros
@@ -65,10 +65,10 @@ void montaJacobiana(double *x, double **j, int n){
 
 
 /* Eliminação de Gauss otimizada
-void eliminacaoGauss (double *a, double *b, double *c, double *s, double *f, int n){
+void eliminacaoGauss (long double *a, long double *b, long double *c, long double *s, long double *f, int n){
     // triangularizacao
     for (int i = 0; i < n-1; ++i){
-        double m = a[i] / b[i];
+        long double m = a[i] / b[i];
         a[i] = 0.0;
         b[i+1] -= c[i]*m;
         f[i+1] -= f[i]*m;
@@ -82,10 +82,10 @@ void eliminacaoGauss (double *a, double *b, double *c, double *s, double *f, int
 }
 */
 
-void eliminacaoGauss (double **j, double *s, double *f, int n){
+void eliminacaoGauss (long double **j, long double *s, long double *f, int n){
     for (int i = 0; i < n; ++i){
         for (int k = i+1; k < n; ++k){
-            double m = j[k][i] / j[i][i];
+            long double m = j[k][i] / j[i][i];
             j[k][i] = 0;
             for (int l = i+1; l < n; ++l)
                 j[k][l] -= j[i][l]*m;
@@ -105,26 +105,26 @@ void eliminacaoGauss (double **j, double *s, double *f, int n){
 
 
 /* --------- norma euclidiana --------- */
-double norma(double *v, int n) {
-    double s = 0.0;
+long double norma(long double *v, int n) {
+    long double s = 0.0;
     for (int i = 0; i < n; i++) s += v[i] * v[i];
     return sqrt(s);
 }
 
-void newton(double **j, double *f, double *s, double *x, double tol, int max_iter, int n, rtime_t *tempoJ, rtime_t *tempo_resolucao) {
-  double *menos_f = (double *) malloc(n * sizeof(double)); // -F(X)
+void newton(long double **j, long double *f, long double *s, long double *x, long double tol, int max_iter, int n, rtime_t *tempoJ, rtime_t *tempo_resolucao) {
+  long double *menos_f = (long double *) malloc(n * sizeof(long double)); // -F(X)
   rtime_t tempo;
 
-  LIKWID_MARKER_START("Monta_Jacobiana");
+  //LIKWID_MARKER_START("Monta_Jacobiana");
   tempo = timestamp();
   montaJacobiana(x, j, n);
   *tempoJ += timestamp() - tempo;
-  LIKWID_MARKER_STOP("Monta_Jacobiana");
+  //LIKWID_MARKER_STOP("Monta_Jacobiana");
 
 
   for (int k = 0; k < max_iter; k++) {
         
-    double nF = norma(f, n);
+    long double nF = norma(f, n);
 
     if (nF < tol) {
       printf("%2d | %.6e |  (convergiu)\n", k, nF);
@@ -136,17 +136,17 @@ void newton(double **j, double *f, double *s, double *x, double tol, int max_ite
     for (int i = 0; i < n; i++) menos_f[i] = -f[i];
 
 	
-    LIKWID_MARKER_START("Resolucao_SL");
+    //LIKWID_MARKER_START("Resolucao_SL");
     tempo = timestamp ();
     eliminacaoGauss(j, s, menos_f, n); // resolve J(X) * s = -F(X)
 	  *tempo_resolucao += timestamp () - tempo;
-    LIKWID_MARKER_STOP("Resolucao_SL");
+    //LIKWID_MARKER_STOP("Resolucao_SL");
 	
 
     for (int i = 0; i < n; i++) x[i] += s[i]; // atualiza X(i+1)
 
     for (int i = 0; i < n; i++) {
-      printf ("x%d = %.6f \n", i+1, x[i]);
+      printf ("x%d = %.6Lf \n", i+1, x[i]);
     }
     printf("#\n");
 
@@ -162,11 +162,11 @@ void newton(double **j, double *f, double *s, double *x, double tol, int max_ite
 
     tempo = timestamp ();
         
-    LIKWID_MARKER_START("Monta_Jacobiana");
+    //LIKWID_MARKER_START("Monta_Jacobiana");
     montaJacobiana(x, j, n);
-    LIKWID_MARKER_STOP("Monta_Jacobiana");
+    //LIKWID_MARKER_STOP("Monta_Jacobiana");
         
-	  *tempoJ += timestamp() - tempo;
+	*tempoJ += timestamp() - tempo;
   }
 
   free(menos_f);

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <likwid.h>
+//#include <likwid.h>
 
 #include "broyden.h"
 #include "utils.h"
@@ -19,13 +19,13 @@ int main() {
     printf ("Digite o numero maximo de iteracoes: ");
     scanf ("%d", &max_iter);
 
-    double *x =  malloc(n * sizeof(double)); // vetor com as variáveis x
-    double *f =  malloc(n * sizeof(double)); // vetor com cada resultado de f(x)
-    double *s =  malloc(n * sizeof(double)); // delta usado para atualizar x (i+1)
-    double **j =  malloc(n * sizeof(double*)); // matriz jacobiana
+    long double *x =  malloc(n * sizeof(long double)); // vetor com as variáveis x
+    long double *f =  malloc(n * sizeof(long double)); // vetor com cada resultado de f(x)
+    long double *s =  malloc(n * sizeof(long double)); // delta usado para atualizar x (i+1)
+    long double **j =  malloc(n * sizeof(long double*)); // matriz jacobiana
 
     for (int i = 0; i < n; i++){
-        j[i] = malloc(n * sizeof(double));
+        j[i] = malloc(n * sizeof(long double));
     }
     
     /*Jacobiana otimizada
@@ -39,15 +39,15 @@ int main() {
     
     avaliaF(x, f, n); //monta o vetor F(X)
 
-    LIKWID_MARKER_INIT; // Inicializa o sistema de marcação do LIKWID
+    //#LIKWID_MARKER_INIT; // Inicializa o sistema de marcação do LIKWID
 
     rtime_t tempo_montaJ = 0.0, tempo_resolucao = 0.0;
 
-    LIKWID_MARKER_START("Newton");
+    //#LIKWID_MARKER_START("Newton");
     rtime_t tempo_newton = timestamp();
     newton(j, f, s, x, tol, max_iter, n, &tempo_montaJ, &tempo_resolucao);
     tempo_newton = timestamp() - tempo_newton;
-    LIKWID_MARKER_STOP("Newton");
+    //LIKWID_MARKER_STOP("Newton");
 
     
     printf ("##########\n");
@@ -63,6 +63,6 @@ int main() {
         free(j[i]);
     }
     free(j);
-    LIKWID_MARKER_CLOSE; // Finaliza o sistema de marcação do LIKWID
+    //LIKWID_MARKER_CLOSE; // Finaliza o sistema de marcação do LIKWID
     return 0;
 }
