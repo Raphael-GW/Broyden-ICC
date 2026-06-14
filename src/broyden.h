@@ -12,10 +12,10 @@ void avaliaF(const long double *x, long double *f, int n);
 
 //newton otimizado
 void newton(long double *a, long double *b, long double *c,  long double *f, long double *s, long double *x, long double tol, 
-int max_iter, int n, rtime_t *tempoJ, rtime_t *tempo_resolucao);
+int max_iter, int n, rtime_t *tempoJ, rtime_t *tempo_resolucao, FILE *out);
   
 // void newton(double **j, double *f, double *s, double *x, double tol, int max_iter, int n, rtime_t *tempoJ, rtime_t *tempo_resolucao);
 
-double norma(long double *v, int n);
+long double norma(long double *v, int n);
 
 #endif

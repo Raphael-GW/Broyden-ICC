@@ -1,0 +1,99 @@
+--------------------------------------------------------------------------------
+CPU name:	AMD Ryzen 5 5500                               
+CPU type:	AMD K19 (Zen3) architecture
+CPU clock:	3.59 GHz
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Region Newton, Group 1: L3
++-------------------+------------+
+|    Region Info    | HWThread 0 |
++-------------------+------------+
+| RDTSC Runtime [s] |   0.012449 |
+|     call count    |          1 |
++-------------------+------------+
+
++-----------------------------+---------+------------+
+|            Event            | Counter | HWThread 0 |
++-----------------------------+---------+------------+
+|       ACTUAL_CPU_CLOCK      |  FIXC1  |   52802060 |
+|        MAX_CPU_CLOCK        |  FIXC2  |   45156170 |
+|     RETIRED_INSTRUCTIONS    |   PMC0  |    1094987 |
+|     CPU_CLOCKS_UNHALTED     |   PMC1  |    2964858 |
+|       L2_PF_HIT_IN_L3       |   PMC2  |      14908 |
+|       L2_PF_MISS_IN_L3      |   PMC3  |        636 |
+| L2_CACHE_MISS_AFTER_L1_MISS |   PMC4  |      15451 |
++-----------------------------+---------+------------+
+
++-------------------------+------------+
+|          Metric         | HWThread 0 |
++-------------------------+------------+
+|   Runtime (RDTSC) [s]   |     0.0124 |
+|   Runtime unhalted [s]  |     0.0147 |
+|       Clock [MHz]       |  4201.6916 |
+|           CPI           |     2.7077 |
+| L3 bandwidth [MBytes/s] |   159.3421 |
+| L3 data volume [GBytes] |     0.0020 |
++-------------------------+------------+
+
+Region Monta_Jacobiana, Group 1: L3
++-------------------+------------+
+|    Region Info    | HWThread 0 |
++-------------------+------------+
+| RDTSC Runtime [s] |   0.000036 |
+|     call count    |         26 |
++-------------------+------------+
+
++-----------------------------+---------+------------+
+|            Event            | Counter | HWThread 0 |
++-----------------------------+---------+------------+
+|       ACTUAL_CPU_CLOCK      |  FIXC1  |   13242390 |
+|        MAX_CPU_CLOCK        |  FIXC2  |   11117630 |
+|     RETIRED_INSTRUCTIONS    |   PMC0  |     238444 |
+|     CPU_CLOCKS_UNHALTED     |   PMC1  |     593416 |
+|       L2_PF_HIT_IN_L3       |   PMC2  |       3110 |
+|       L2_PF_MISS_IN_L3      |   PMC3  |        308 |
+| L2_CACHE_MISS_AFTER_L1_MISS |   PMC4  |       2799 |
++-----------------------------+---------+------------+
+
++-------------------------+--------------+
+|          Metric         |  HWThread 0  |
++-------------------------+--------------+
+|   Runtime (RDTSC) [s]   | 3.638798e-05 |
+|   Runtime unhalted [s]  |       0.0037 |
+|       Clock [MHz]       |    4280.0078 |
+|           CPI           |       2.4887 |
+| L3 bandwidth [MBytes/s] |   10934.5998 |
+| L3 data volume [GBytes] |       0.0004 |
++-------------------------+--------------+
+
+Region Resolucao_SL, Group 1: L3
++-------------------+------------+
+|    Region Info    | HWThread 0 |
++-------------------+------------+
+| RDTSC Runtime [s] |   0.000119 |
+|     call count    |         25 |
++-------------------+------------+
+
++-----------------------------+---------+------------+
+|            Event            | Counter | HWThread 0 |
++-----------------------------+---------+------------+
+|       ACTUAL_CPU_CLOCK      |  FIXC1  |   13281350 |
+|        MAX_CPU_CLOCK        |  FIXC2  |   11416860 |
+|     RETIRED_INSTRUCTIONS    |   PMC0  |     299667 |
+|     CPU_CLOCKS_UNHALTED     |   PMC1  |     925351 |
+|       L2_PF_HIT_IN_L3       |   PMC2  |       4524 |
+|       L2_PF_MISS_IN_L3      |   PMC3  |         73 |
+| L2_CACHE_MISS_AFTER_L1_MISS |   PMC4  |       3109 |
++-----------------------------+---------+------------+
+
++-------------------------+------------+
+|          Metric         | HWThread 0 |
++-------------------------+------------+
+|   Runtime (RDTSC) [s]   |     0.0001 |
+|   Runtime unhalted [s]  |     0.0037 |
+|       Clock [MHz]       |  4180.0931 |
+|           CPI           |     3.0879 |
+| L3 bandwidth [MBytes/s] |  4128.6797 |
+| L3 data volume [GBytes] |     0.0005 |
++-------------------------+------------+
+

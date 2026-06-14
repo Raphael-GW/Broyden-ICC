@@ -1,0 +1,93 @@
+--------------------------------------------------------------------------------
+Region Resolucao_SL, Group 1: L3
++-------------------+------------+
+|    Region Info    | HWThread 0 |
++-------------------+------------+
+| RDTSC Runtime [s] |   0.000017 |
+|     call count    |         25 |
++-------------------+------------+
+
++-----------------------------+---------+------------+
+|            Event            | Counter | HWThread 0 |
++-----------------------------+---------+------------+
+|       ACTUAL_CPU_CLOCK      |  FIXC1  |   13537500 |
+|        MAX_CPU_CLOCK        |  FIXC2  |   11651870 |
+|     RETIRED_INSTRUCTIONS    |   PMC0  |     162476 |
+|     CPU_CLOCKS_UNHALTED     |   PMC1  |     502470 |
+|       L2_PF_HIT_IN_L3       |   PMC2  |       1255 |
+|       L2_PF_MISS_IN_L3      |   PMC3  |         23 |
+| L2_CACHE_MISS_AFTER_L1_MISS |   PMC4  |       3254 |
++-----------------------------+---------+------------+
+
++-------------------------+--------------+
+|          Metric         |  HWThread 0  |
++-------------------------+--------------+
+|   Runtime (RDTSC) [s]   | 1.693164e-05 |
+|   Runtime unhalted [s]  |       0.0038 |
+|       Clock [MHz]       |    4174.7808 |
+|           CPI           |       3.0926 |
+| L3 bandwidth [MBytes/s] |   17130.5320 |
+| L3 data volume [GBytes] |       0.0003 |
++-------------------------+--------------+
+
+Region Newton, Group 1: L3
++-------------------+------------+
+|    Region Info    | HWThread 0 |
++-------------------+------------+
+| RDTSC Runtime [s] |   0.014818 |
+|     call count    |          1 |
++-------------------+------------+
+
++-----------------------------+---------+------------+
+|            Event            | Counter | HWThread 0 |
++-----------------------------+---------+------------+
+|       ACTUAL_CPU_CLOCK      |  FIXC1  |        -22 |
+|        MAX_CPU_CLOCK        |  FIXC2  |        -22 |
+|     RETIRED_INSTRUCTIONS    |   PMC0  |        -22 |
+|     CPU_CLOCKS_UNHALTED     |   PMC1  |        -22 |
+|       L2_PF_HIT_IN_L3       |   PMC2  |        -22 |
+|       L2_PF_MISS_IN_L3      |   PMC3  |        -22 |
+| L2_CACHE_MISS_AFTER_L1_MISS |   PMC4  |        -22 |
++-----------------------------+---------+------------+
+
++-------------------------+---------------+
+|          Metric         |   HWThread 0  |
++-------------------------+---------------+
+|   Runtime (RDTSC) [s]   |        0.0148 |
+|   Runtime unhalted [s]  | -6.122543e-09 |
+|       Clock [MHz]       |     3593.2782 |
+|           CPI           |             1 |
+| L3 bandwidth [MBytes/s] |       -0.2851 |
+| L3 data volume [GBytes] | -4.224000e-06 |
++-------------------------+---------------+
+
+Region Monta_Jacobiana, Group 1: L3
++-------------------+------------+
+|    Region Info    | HWThread 0 |
++-------------------+------------+
+| RDTSC Runtime [s] |   0.000008 |
+|     call count    |         26 |
++-------------------+------------+
+
++-----------------------------+---------+------------+
+|            Event            | Counter | HWThread 0 |
++-----------------------------+---------+------------+
+|       ACTUAL_CPU_CLOCK      |  FIXC1  |   12530960 |
+|        MAX_CPU_CLOCK        |  FIXC2  |   10804460 |
+|     RETIRED_INSTRUCTIONS    |   PMC0  |     156966 |
+|     CPU_CLOCKS_UNHALTED     |   PMC1  |     527315 |
+|       L2_PF_HIT_IN_L3       |   PMC2  |       2291 |
+|       L2_PF_MISS_IN_L3      |   PMC3  |         71 |
+| L2_CACHE_MISS_AFTER_L1_MISS |   PMC4  |       4336 |
++-----------------------------+---------+------------+
+
++-------------------------+--------------+
+|          Metric         |  HWThread 0  |
++-------------------------+--------------+
+|   Runtime (RDTSC) [s]   | 7.774529e-06 |
+|   Runtime unhalted [s]  |       0.0035 |
+|       Clock [MHz]       |    4167.4665 |
+|           CPI           |       3.3594 |
+| L3 bandwidth [MBytes/s] |   55138.0026 |
+| L3 data volume [GBytes] |       0.0004 |
++-------------------------+--------------+
