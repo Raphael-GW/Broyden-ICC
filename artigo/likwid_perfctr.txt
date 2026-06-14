@@ -1,0 +1,20 @@
+Group name	Description
+--------------------------------------------------------------------------------
+ L2CACHE	L2 cache miss rate/ratio (experimental)
+   CACHE	Data cache miss rate/ratio
+     TLB	TLB miss rate/ratio
+    MEM1	Main memory bandwidth in MBytes/s (channels 0-3)
+     CPI	Cycles per instruction
+FLOPS_SP	Single Precision MFLOP/s
+    DATA	Load to store ratio
+  BRANCH	Branch prediction miss rate/ratio
+  DIVIDE	Divide unit information
+      L2	L2 cache bandwidth in MBytes/s (experimental)
+    MEM2	Main memory bandwidth in MBytes/s (channels 4-7)
+  ICACHE	Instruction cache miss rate/ratio
+ L3CACHE	L3 cache miss rate/ratio (experimental)
+FLOPS_DP	Double Precision MFLOP/s
+    NUMA	L2 cache bandwidth in MBytes/s (experimental)
+      L3	L3 cache bandwidth in MBytes/s
+   CLOCK	Cycles per instruction
+  ENERGY	Power and Energy consumption
