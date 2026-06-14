@@ -22,17 +22,17 @@ int main() {
     double *x =  malloc(n * sizeof(double)); // vetor com as variáveis x
     double *f =  malloc(n * sizeof(double)); // vetor com cada resultado de f(x)
     double *s =  malloc(n * sizeof(double)); // delta usado para atualizar x (i+1)
-    double **j =  malloc(n * sizeof(double*)); // matriz jacobiana
 
-    for (int i = 0; i < n; i++){
-        j[i] = malloc(n * sizeof(double));
-    }
+    // double **j =  malloc(n * sizeof(double*)); // matriz jacobiana
+    // for (int i = 0; i < n; i++){
+    //     j[i] = malloc(n * sizeof(double));
+    // }
     
-    /*Jacobiana otimizada
+    // Jacobiana otimizada
     double *a =  malloc(n * sizeof(double)); // subdiagonal
     double *b =  malloc(n * sizeof(double)); // diagonal principal
     double *c =  malloc(n * sizeof(double)); // superdiagonal
-    */
+    
 
     /* chute inicial para todos */
     for (int i = 0; i < n; i++) x[i] = x0;
@@ -45,7 +45,10 @@ int main() {
 
     LIKWID_MARKER_START("Newton");
     rtime_t tempo_newton = timestamp();
-    newton(j, f, s, x, tol, max_iter, n, &tempo_montaJ, &tempo_resolucao);
+    // newton(j, f, s, x, tol, max_iter, n, &tempo_montaJ, &tempo_resolucao);
+
+    // Newton otimizado
+    newton(a, b, c, f, s, x, tol, max_iter, n, &tempo_montaJ, &tempo_resolucao);
     tempo_newton = timestamp() - tempo_newton;
     LIKWID_MARKER_STOP("Newton");
 
@@ -59,10 +62,10 @@ int main() {
     free(x); 
     free(f); 
     free(s);
-    for (int i = 0; i < n; ++i){
-        free(j[i]);
-    }
-    free(j);
+    // for (int i = 0; i < n; ++i){
+    //     free(j[i]);
+    // }
+    // free(j);
     LIKWID_MARKER_CLOSE; // Finaliza o sistema de marcação do LIKWID
     return 0;
 }

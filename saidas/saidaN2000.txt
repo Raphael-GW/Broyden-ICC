@@ -50024,7 +50024,7 @@ x1999 = -nan
 x2000 = -nan 
 #
 ##########
-# Tempo Total: 25682.164569
-# Tempo Jacobiana: 58.540107
-# Tempo SL: 25612.576664
+# Tempo Total: 11.046863
+# Tempo Jacobiana: 0.033011
+# Tempo SL: 0.529398
 ##########
