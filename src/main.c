@@ -36,28 +36,28 @@ int main(int argc, char **argv) {
   }
 
   // printf ("Digite a dimensao do sistema (N): ");
-    if (scanf ("%d", &n) != 1) {
-        fprintf(stderr, "Erro: Entrada inválida para a dimensão (N).\n");
-        return 1;
-    }
+  if (scanf ("%d", &n) != 1) {
+    fprintf(stderr, "Erro: Entrada inválida para a dimensão (N).\n");
+    return 1;
+  }
     
-    // printf ("Digite o chute inicial (x0): ");
-    if (scanf ("%Lf", &x0) != 1) {
-        fprintf(stderr, "Erro: Entrada inválida para o chute inicial (x0).\n");
-        return 1;
-    }
+  // printf ("Digite o chute inicial (x0): ");
+  if (scanf ("%Lf", &x0) != 1) {
+      fprintf(stderr, "Erro: Entrada inválida para o chute inicial (x0).\n");
+      return 1;
+  }
     
-    // printf ("Digite a tolerancia (TOL): ");
-    if (scanf ("%Lf", &tol) != 1) {
-        fprintf(stderr, "Erro: Entrada inválida para a tolerância (TOL).\n");
-        return 1;
-    }
+  // printf ("Digite a tolerancia (TOL): ");
+  if (scanf ("%Lf", &tol) != 1) {
+    fprintf(stderr, "Erro: Entrada inválida para a tolerância (TOL).\n");
+    return 1;
+  }
     
-    // printf ("Digite o numero maximo de iteracoes: ");
-    if (scanf ("%d", &max_iter) != 1) {
-        fprintf(stderr, "Erro: Entrada inválida para o número de iterações.\n");
-        return 1;
-    }
+  // printf ("Digite o numero maximo de iteracoes: ");
+  if (scanf ("%d", &max_iter) != 1) {
+    fprintf(stderr, "Erro: Entrada inválida para o número de iterações.\n");
+    return 1;
+  }
 
   long double *x =  malloc(n * sizeof(long double)); // vetor com as variáveis x
   long double *f =  malloc(n * sizeof(long double)); // vetor com cada resultado de f(x)
@@ -90,11 +90,11 @@ int main(int argc, char **argv) {
   LIKWID_MARKER_STOP("Newton");
 
     
-  // fprintf (out, "##########\n");
-  // fprintf (out, "# Tempo Total: %f\n", tempo_newton);
-  // fprintf (out, "# Tempo Jacobiana: %f\n", tempo_montaJ);
-  // fprintf (out, "# Tempo SL: %f\n", tempo_resolucao);
-  // fprintf (out, "##########\n");
+  fprintf (out, "##########\n");
+  fprintf (out, "# Tempo Total: %f\n", tempo_newton);
+  fprintf (out, "# Tempo Jacobiana: %f\n", tempo_montaJ);
+  fprintf (out, "# Tempo SL: %f\n", tempo_resolucao);
+  fprintf (out, "##########\n");
 
   free(x); 
   free(f); 
@@ -104,7 +104,7 @@ int main(int argc, char **argv) {
   free(c);
 
   if (out != stdout) {
-      fclose(out);
+    fclose(out);
   }
 
   LIKWID_MARKER_CLOSE;

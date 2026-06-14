@@ -13,7 +13,7 @@ LDFLAGS = $(LIKWID_LIB) -lm -llikwid -llikwid-hwloc -llikwid-lua \
           -Wl,-rpath,$(LIKWID_PREFIX)/lib \
           -Wl,-rpath-link,$(LIKWID_PREFIX)/lib
 
-nomePrograma = broyden
+nomePrograma = ../broyden
 FLAGS_VALGRIND = --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 all: $(nomePrograma)
